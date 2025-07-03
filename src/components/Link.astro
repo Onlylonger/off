@@ -1,0 +1,20 @@
+---
+const { class: className, showActive = false, ...reset } = Astro.props;
+
+const pathname = Astro.url.pathname.replace(import.meta.env.BASE_URL, "");
+const replaceHref = reset.href.replace(import.meta.env.BASE_URL, "");
+const subpath = pathname.match(/[^\/]+/g);
+const isActive =
+  replaceHref === pathname || replaceHref === "/" + (subpath?.[0] || "");
+---
+
+<a
+  class:list={[
+    className,
+    "hover:underline hover:scale-110",
+    { underline: showActive && isActive },
+  ]}
+  {...reset}
+>
+  <slot />
+</a>

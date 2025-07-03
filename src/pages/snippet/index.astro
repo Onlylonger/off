@@ -1,26 +1,25 @@
 ---
 import { getCollection } from "astro:content";
-// import FormattedDate from "../../components/FormattedDate.astro";
 import Layout from "../../components/Layout.astro";
 import { compareMonthDay, getUrl } from "../../utils";
 import ProjectList from "../../components/ProjectList.astro";
 
-const yearsMap: Record<string, any[]> = {};
+const category: Record<string, any[]> = {};
 
-(await getCollection("blog"))
+(await getCollection("codeSnippet"))
   .sort((a, b) => compareMonthDay(b.data.pubDate, a.data.pubDate))
   .map((v) => {
     // ['src','content','newBlogs', '2025']
     const pathnames = v.filePath?.split("/") || [];
-    const fromYear = pathnames[3];
+    const cat = pathnames[3];
 
-    if (yearsMap[fromYear]) {
-      yearsMap[fromYear].push({
+    if (category[cat]) {
+      category[cat].push({
         title: v.data.title,
         id: v.id,
       });
     } else {
-      yearsMap[fromYear] = [
+      category[cat] = [
         {
           title: v.data.title,
           id: v.id,
@@ -30,11 +29,11 @@ const yearsMap: Record<string, any[]> = {};
 
     return {
       ...v,
-      fromYear,
+      cat,
     };
   });
 
-const years = Object.keys(yearsMap).sort(
+const cats = Object.keys(category).sort(
   (a, b) => Number(b).valueOf() - Number(a).valueOf(),
 );
 ---
@@ -42,14 +41,14 @@ const years = Object.keys(yearsMap).sort(
 <Layout>
   <section>
     {
-      years.map((year) => {
-        const list = yearsMap[year];
+      cats.map((year) => {
+        const list = category[year];
         return (
           <ProjectList title={year}>
             <ul>
               {list.map((post) => (
                 <li>
-                  <a class="group" href={getUrl(`/blog/${post.id}/`)}>
+                  <a class="group" href={getUrl(`/snippet/${post.id}/`)}>
                     <div class="flex justify-between">
                       <h4 class="group-hover:underline">{post.title}</h4>
                       <span class="hidden group-hover:inline-block">

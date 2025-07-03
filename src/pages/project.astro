@@ -1,0 +1,89 @@
+---
+import Layout from "../components/Layout.astro";
+import ProjectList from "../components/ProjectList.astro";
+
+const webAppsList = [
+  {
+    label: "LIS NBS",
+    description: "Laboratory Information System for Newborn System",
+    url: "https://lis-nbs-dev.svc.hadev.org.hk/",
+  },
+  {
+    label: "YDJ Official Website",
+    description: "The YDJ company portal for introduce there brand and goods",
+    url: "https://yidejia.com",
+  },
+];
+
+const wechatMiniProgram = [
+  {
+    label: "YDJ Offical MiniProgram",
+    description: "The YDJ E-commerce for wechat",
+    url: "#小程序://伊的家/EytuSlD5idoGUll",
+  },
+];
+
+const npmPackagesList = [
+  {
+    label: "@shilong/nrm",
+    description: "This is a simple npm registry manager cli tool.",
+    url: "https://www.npmjs.com/package/@shilong/nrm",
+  },
+  {
+    label: "wepy-ui-ydj",
+    description: "A UI components for wepy framework in wechat mini program",
+    url: "https://github.com/YDJ-FE/wepy-ui-ydj",
+  },
+  {
+    label: "wepy-antv-f2",
+    description: "Antv/f2 for wepy framework in wechat mini program",
+    url: "https://github.com/Onlylonger/wepy-antv-f2",
+  },
+  {
+    label: "mini-program-utils",
+    description: "Utils function for wechat mini program",
+    url: "https://github.com/Onlylonger/mini-program-utils",
+  },
+];
+---
+
+<Layout>
+  <ProjectList title="Web Application" list={webAppsList} />
+  <ProjectList title="NPM Packages" list={npmPackagesList} />
+  <ProjectList title="Wechat Mini Programs" class="mb-15">
+    {
+      wechatMiniProgram.map((v) => {
+        return (
+          <li
+            class="mini-project-item cursor-pointer hover:opacity-70"
+            data-url={v.url}
+          >
+            {v.label}
+            <div class="relative -top-1">
+              {v.description && (
+                <span class="text-sm text-gray-300 pl-1 ">
+                  - {v.description}
+                </span>
+              )}
+            </div>
+          </li>
+        );
+      })
+    }
+  </ProjectList>
+</Layout>
+
+<script>
+  import { openMessageBox } from "../react/utils";
+  import { copyToClipboard } from "../utils";
+
+  const miniItems = document.querySelectorAll("li.mini-project-item");
+  miniItems.forEach((ele) => {
+    ele.addEventListener("click", async () => {
+      const url = ele.getAttribute("data-url");
+      if (!url) return;
+      const res = await copyToClipboard(url);
+      res && openMessageBox(`请前往微信App搜索框 长按粘贴 搜索`);
+    });
+  });
+</script>

@@ -1,0 +1,9 @@
+---
+import MenuList from "./MenuList.astro";
+
+const { class: className, ...reset } = Astro.props;
+---
+
+<nav class:list={[className, ""]} {...reset}>
+  <MenuList class="flex gap-4" />
+</nav>
