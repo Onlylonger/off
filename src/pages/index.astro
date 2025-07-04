@@ -1,20 +1,9 @@
 ---
-import BaseHead from '../components/BaseHead.astro';
-import {Header} from '../components/Header';
-import Footer from '../components/Footer.astro';
-import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import Layout from "../components/Layout.astro";
 ---
 
-<!doctype html>
-<html lang="en">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-	</head>
-	<body>
-		<Header />
-		<main>
-			content
-		</main>
-		<Footer />
-	</body>
-</html>
+<Layout title="Home">
+  Hi 👋 . Welcome to my personal portal. This site includes various observations
+  and experiences from my daily life, and I hope it can be helpful to you in
+  some way!
+</Layout>

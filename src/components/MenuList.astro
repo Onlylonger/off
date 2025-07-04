@@ -1,0 +1,17 @@
+---
+import { menuList } from "../consts";
+import Link from "./Link.astro";
+const props = Astro.props
+---
+
+<ul {...props}>
+  {
+    menuList.map((v) => {
+      return (
+        <li>
+          <Link href={v.url}>{v.label}</Link>
+        </li>
+      );
+    })
+  }
+</ul>
