@@ -1,28 +1,74 @@
 ---
 import { getCollection } from "astro:content";
-import FormattedDate from "../../components/FormattedDate.astro";
+// import FormattedDate from "../../components/FormattedDate.astro";
 import Layout from "../../components/Layout.astro";
 
 const posts = (await getCollection("blog")).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
+const listMap: Record<string, any[]> = {};
+
+// const newBlogs = (await getCollection("newBlogs")).sort(
+//   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+// ).map(v => {
+// 	const pathnames = v.filePath?.split('/') || []
+// 	const index = pathnames?.findIndex(pathname => pathname === 'newBlogs') + 1
+// 	const fromYear = typeof index === 'number' ? pathnames[index] : ''
+// 	if (listMap[fromYear]) {
+// 		listMap[fromYear].push({
+// 			title: v.data.title,
+// 			id: v.id,
+// 		})
+// 	} else {
+// 		listMap[fromYear] = [{
+// 			title: v.data.title,
+// 			id: v.id,
+// 		}]
+// 	}
+// 	return {
+// 		...v,
+// 		fromYear: v.filePath?.split('/')
+// 	}
+// });
+
+const years: ("2025" | "2024")[] = ["2025", "2024"];
+const yearsMap: Record<string, any> = {};
+for (const year of years) {
+  const res = await getCollection(year);
+  yearsMap[year] = res;
+}
+
+// const res = await Promise.all([getCollection("2025"), getCollection("2024")])
+// console.log(yearsMap)
+
+// console.log(newBlogs)
 ---
 
 <Layout>
   <section>
-    <ul>
-      {
-        posts.map((post) => (
-          <li>
-            <a class="group" href={`/blog/${post.id}/`}>
-              <div class="flex justify-between">
-                <h4 class="hover:underline">{post.data.title}</h4>
-                <span class="hidden group-hover:inline-block">Read Post</span>
-              </div>
-            </a>
-          </li>
-        ))
-      }
-    </ul>
+    {
+      years.map((year) => {
+        const list = yearsMap[year];
+        return (
+          <div>
+            <h2>{year}</h2>
+            <ul>
+              {list.map((post) => (
+                <li>
+                  <a class="group" href={`/blog/${post.id}/`}>
+                    <div class="flex justify-between">
+                      <h4 class="group-hover:underline">{post.data.title}</h4>
+                      <span class="hidden group-hover:inline-block">
+                        Read Post
+                      </span>
+                    </div>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        );
+      })
+    }
   </section>
 </Layout>
