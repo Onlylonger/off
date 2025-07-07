@@ -4,6 +4,8 @@
 export const SITE_TITLE = "Barry Portal";
 export const SITE_DESCRIPTION = "Welcome to my website!";
 
+export const DATE_DIVIDER = ".";
+
 export const menuList = [
   {
     label: "Home",

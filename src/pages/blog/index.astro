@@ -2,46 +2,40 @@
 import { getCollection } from "astro:content";
 // import FormattedDate from "../../components/FormattedDate.astro";
 import Layout from "../../components/Layout.astro";
+import { compareMonthDay } from "../../utils";
 
-const posts = (await getCollection("blog")).sort(
-  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+const yearsMap: Record<string, any[]> = {};
+
+(await getCollection("blog"))
+  .sort((a, b) => compareMonthDay(b.data.pubDate, a.data.pubDate))
+  .map((v) => {
+    // ['src','content','newBlogs', '2025']
+    const pathnames = v.filePath?.split("/") || [];
+    const fromYear = pathnames[3];
+
+    if (yearsMap[fromYear]) {
+      yearsMap[fromYear].push({
+        title: v.data.title,
+        id: v.id,
+      });
+    } else {
+      yearsMap[fromYear] = [
+        {
+          title: v.data.title,
+          id: v.id,
+        },
+      ];
+    }
+
+    return {
+      ...v,
+      fromYear,
+    };
+  });
+
+const years = Object.keys(yearsMap).sort(
+  (a, b) => Number(b).valueOf() - Number(a).valueOf()
 );
-const listMap: Record<string, any[]> = {};
-
-// const newBlogs = (await getCollection("newBlogs")).sort(
-//   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
-// ).map(v => {
-// 	const pathnames = v.filePath?.split('/') || []
-// 	const index = pathnames?.findIndex(pathname => pathname === 'newBlogs') + 1
-// 	const fromYear = typeof index === 'number' ? pathnames[index] : ''
-// 	if (listMap[fromYear]) {
-// 		listMap[fromYear].push({
-// 			title: v.data.title,
-// 			id: v.id,
-// 		})
-// 	} else {
-// 		listMap[fromYear] = [{
-// 			title: v.data.title,
-// 			id: v.id,
-// 		}]
-// 	}
-// 	return {
-// 		...v,
-// 		fromYear: v.filePath?.split('/')
-// 	}
-// });
-
-const years: ("2025" | "2024")[] = ["2025", "2024"];
-const yearsMap: Record<string, any> = {};
-for (const year of years) {
-  const res = await getCollection(year);
-  yearsMap[year] = res;
-}
-
-// const res = await Promise.all([getCollection("2025"), getCollection("2024")])
-// console.log(yearsMap)
-
-// console.log(newBlogs)
 ---
 
 <Layout>
@@ -57,7 +51,7 @@ for (const year of years) {
                 <li>
                   <a class="group" href={`/blog/${post.id}/`}>
                     <div class="flex justify-between">
-                      <h4 class="group-hover:underline">{post.data.title}</h4>
+                      <h4 class="group-hover:underline">{post.title}</h4>
                       <span class="hidden group-hover:inline-block">
                         Read Post
                       </span>
