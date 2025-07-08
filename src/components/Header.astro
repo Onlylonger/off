@@ -2,17 +2,18 @@
 import Menu from "./Menu.astro";
 import MobileMenu from "./MobileMenu.astro";
 
-const { class: className, ...reset} =  Astro.props
-
+const { class: className, ...reset } = Astro.props;
 ---
 
-<header class:list={[className, '']} {...reset}>
+<header class:list={[className, "relative"]} {...reset}>
   <div class="container px-4 flex justify-between items-center mx-auto h-14">
     <MobileMenu class="md:hidden relative" />
 
-	<Menu class="hidden md:flex items-center h-full gap-5"/>
-    <div class="h-full flex items-center">
-      <span class="inline-block size-4 bg-black rounded-full cursor-pointer hover:scale-110"></span>
-    </div>
+    <Menu class="hidden md:flex items-center h-full gap-5" />
+  </div>
+  <div class="flex items-center absolute top-11 right-4">
+    <span
+      class="inline-block size-4 bg-black rounded-full cursor-pointer hover:scale-110"
+    ></span>
   </div>
 </header>
