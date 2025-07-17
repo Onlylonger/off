@@ -1,30 +1,40 @@
 ---
 import { getCollection } from "astro:content";
 import Layout from "../../components/Layout.astro";
-import { compareMonthDay, getUrl } from "../../utils";
+import { capitalizeFirstLetter, getUrl } from "../../utils";
 import ProjectList from "../../components/ProjectList.astro";
+import { isLocal, maxDescChars } from "../../consts";
 
 const category: Record<string, any[]> = {};
 
-(await getCollection("codeSnippet"))
-  .sort((a, b) => compareMonthDay(b.data.pubDate, a.data.pubDate))
+(
+  await getCollection("codeSnippet", ({ id }) => {
+    const ids = id.split("/");
+    return !ids[ids.length - 1].startsWith("_");
+  })
+)
+  .sort(
+    (a, b) =>
+      new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime(),
+  )
   .map((v) => {
     // ['src','content','newBlogs', '2025']
     const pathnames = v.filePath?.split("/") || [];
     const cat = pathnames[3];
 
+    const tmp = {
+      title: isLocal ? `${v.data.title} - ${v.data.pubDate}` : v.data.title,
+      id: v.id,
+      description:
+        v.data.description.length > maxDescChars
+          ? `${v.data.description.slice(0, maxDescChars)}...`
+          : v.data.description,
+    };
+
     if (category[cat]) {
-      category[cat].push({
-        title: v.data.title,
-        id: v.id,
-      });
+      category[cat].push(tmp);
     } else {
-      category[cat] = [
-        {
-          title: v.data.title,
-          id: v.id,
-        },
-      ];
+      category[cat] = [tmp];
     }
 
     return {
@@ -33,33 +43,25 @@ const category: Record<string, any[]> = {};
     };
   });
 
-const cats = Object.keys(category).sort(
-  (a, b) => Number(b).valueOf() - Number(a).valueOf(),
-);
+const cats = ["react", "javascript"];
+// const cats = Object.keys(category);
 ---
 
 <Layout>
   <section>
     {
-      cats.map((year) => {
-        const list = category[year];
+      cats.map((cat) => {
+        const list = category[cat];
         return (
-          <ProjectList title={year}>
-            <ul>
-              {list.map((post) => (
-                <li>
-                  <a class="group" href={getUrl(`/snippet/${post.id}/`)}>
-                    <div class="flex justify-between">
-                      <h4 class="group-hover:underline">{post.title}</h4>
-                      <span class="hidden group-hover:inline-block">
-                        Read Post
-                      </span>
-                    </div>
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </ProjectList>
+          <ProjectList
+            title={capitalizeFirstLetter(cat)}
+            list={list.map((post) => ({
+              url: getUrl(`/snippet/${post.id}/`),
+              label: post.title,
+              description: post.description,
+            }))}
+            footerDesc="Try Snippet"
+          />
         );
       })
     }

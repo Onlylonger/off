@@ -8,6 +8,10 @@ export const SITE_DESCRIPTION = "Welcome to my website!";
 
 export const DATE_DIVIDER = ".";
 
+export const isLocal = process.env.NODE_ENV === "development";
+
+export const maxDescChars = 50;
+
 export const menuList = [
   {
     label: "Home",

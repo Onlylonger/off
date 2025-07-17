@@ -1,11 +1,30 @@
 ---
-title: mount
-description: Mount zzx
-pubDate: "7.15"
+title: 动态挂载 React 组件
+description: 动态将 `React` 组件挂载到 `DOM` 中，适用于全局弹窗例如 `Toast`, `Dialog`
+pubDate: "2021.3.1"
 ---
 
-# Mount
+# {frontmatter.title}
 
-import Demo from "./Demo";
+描述：{frontmatter.description}。
+
+```tsx
+function mount(reactElement: React.ReactElement, rootClassList: string[]) {
+  // TODO
+}
+
+mount(
+  "This is Toast Content",
+  "fixed top-5 left-1/2 -translate-x-1/2 px-4 py-2 border border-black rounded-md",
+);
+```
+
+> `JS` 添加 `DOM` 节点的时候，都是通过类似 `document.body.appendChild` 的方法。关键在于节点的创建和交互，如果是按照传统的字符串拼接 `HTML` 进行开发很痛苦，而且维护也不方便。
+
+import Demo from "./demo/Demo";
 
 <Demo client:load />
+
+优点：调用方便，无需关注是否在 `React` 组件内。
+
+缺点：缺失 `React Provider` 注入的上下文变量。

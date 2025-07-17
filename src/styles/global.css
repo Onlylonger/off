@@ -22,3 +22,7 @@
     }
   }
 }
+
+.prose .no-prose pre {
+  background-color: initial;
+}

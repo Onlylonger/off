@@ -10,6 +10,7 @@ import react from "@astrojs/react";
 export default defineConfig({
   site: "https://onlylonger.github.io",
   base: "off",
+  prefetch: true,
   integrations: [mdx(), react()],
   // outDir: "docs",
   vite: {

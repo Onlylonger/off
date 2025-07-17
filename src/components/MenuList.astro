@@ -9,7 +9,7 @@ const props = Astro.props;
     menuList.map((v) => {
       return (
         <li>
-          <Link href={v.url} showActive>
+          <Link href={v.url} showActive data-astro-prefetch="load">
             {v.label}
           </Link>
         </li>

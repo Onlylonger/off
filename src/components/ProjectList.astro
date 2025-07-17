@@ -1,6 +1,14 @@
 ---
 import Link from "./Link.astro";
-const { class: className, list, title, ...reset } = Astro.props;
+const {
+  class: className,
+  underline = true,
+  list,
+  title,
+  footerDesc = "",
+  target = "_self",
+  ...reset
+} = Astro.props;
 ---
 
 <ul class:list={[className, "flex flex-col gap-3"]} {...reset}>
@@ -14,21 +22,33 @@ const { class: className, list, title, ...reset } = Astro.props;
       list?.map((v) => {
         return (
           <li>
-            <Link
+            <a
               href={v.url}
-              target="_blank"
+              target={target}
               rel="noopener noreferrer"
-              class="hover:decoration-gray-300"
+              class:list={[
+                "group hover:underline",
+                underline ? "hover:decoration-gray-300" : "hover:opacity-70",
+                "flex justify-between items-center",
+              ]}
             >
-              {v.label}
-              <div class="relative -top-1">
-                {v.description && (
-                  <span class="text-sm text-gray-300 pl-1 ">
-                    - {v.description}
-                  </span>
-                )}
+              <div>
+                {v.label}
+                <div class="relative -top-1 ">
+                  {v.description && (
+                    <span class="text-sm text-gray-300 inline-block group-hover:underline">
+                      {v.description}
+                    </span>
+                  )}
+                </div>
               </div>
-            </Link>
+              {!!footerDesc && (
+                <span class="hidden group-hover:inline-block text-gray-300">
+                  {footerDesc}
+                  {">"}
+                </span>
+              )}
+            </a>
           </li>
         );
       })
