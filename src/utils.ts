@@ -55,3 +55,10 @@ export const copyToClipboard = async (text: string, isRichText = false) => {
     }
   }
 };
+
+export const capitalizeFirstLetter = (str: string) => {
+  return str.replace(
+    /^(\s*)([a-z])/,
+    (_, spaces, letter) => spaces + letter.toUpperCase(),
+  );
+};
