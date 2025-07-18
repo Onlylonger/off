@@ -33,18 +33,16 @@ const category: Record<string, any[]> = {};
     };
   });
 
-const cats = Object.keys(category).sort(
-  (a, b) => Number(b).valueOf() - Number(a).valueOf(),
-);
+const cats = Object.keys(category);
 ---
 
 <Layout>
   <section>
     {
-      cats.map((year) => {
-        const list = category[year];
+      cats.map((cat) => {
+        const list = category[cat];
         return (
-          <ProjectList title={year}>
+          <ProjectList title={cat}>
             <ul>
               {list.map((post) => (
                 <li>

@@ -13,17 +13,8 @@ export default function LiveCode(props: SandpackProps) {
   if (!Component) return "loading...";
 
   return (
-    <Component
-      theme="light"
-      template="react"
-      {...props}
-      options={{
-        initMode: "immediate",
-        externalResources: ["https://cdn.tailwindcss.com"],
-        classes: {
-          "sp-wrapper": "no-prose",
-        },
-      }}
-    />
+    <div className="no-prose">
+      <Component theme="light" template="react" {...props} />
+    </div>
   );
 }
