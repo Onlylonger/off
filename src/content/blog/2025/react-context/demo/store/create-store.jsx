@@ -1,22 +1,22 @@
-import React, { createContext, useContext } from 'react'
+import React, { createContext, useContext } from "react";
 
 export function createStore(useHook) {
-  const Context = createContext(null)
+  const Context = createContext(null);
 
   function Provider(props) {
-    const { children, initialState } = props
+    const { children, initialState } = props;
 
-    const value = useHook(initialState)
+    const value = useHook(initialState);
 
-    return <Context.Provider value={value}>{children}</Context.Provider>
+    return <Context.Provider value={value}>{children}</Context.Provider>;
   }
 
   function useStore() {
-    return useContext(Context)
+    return useContext(Context);
   }
 
   return {
     Provider,
-    useStore
-  }
+    useStore,
+  };
 }

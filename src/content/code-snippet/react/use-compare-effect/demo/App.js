@@ -18,7 +18,7 @@ export default function App() {
   }, [{}]);
 
   return (
-    <div className="flex items-center justify-center min-h-svh gap-2">
+    <div className="flex min-h-svh items-center justify-center gap-2">
       <div>
         <p>effectCount: {effectCountRef.current}</p>
         <p>deepCompareCount: {deepCompareCountRef.current}</p>
@@ -26,7 +26,7 @@ export default function App() {
           <button
             type="button"
             onClick={() => setCount((c) => c + 1)}
-            className="px-2 py-1 border border-black rounded-md"
+            className="rounded-md border border-black px-2 py-1"
           >
             reRender
           </button>

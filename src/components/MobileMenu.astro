@@ -5,12 +5,12 @@ const { class: className, ...reset } = Astro.props;
 ---
 
 <nav {...reset} class:list={[className, "relative"]}>
-  <span id="trigger" class="text-sm cursor-pointer">三</span>
+  <span id="trigger" class="cursor-pointer text-sm">三</span>
   <div
     id="popup"
-    class="hidden absolute -left-2 top-0 px-2 border border-dashed border-black w-[268px] bg-gray-200/80"
+    class="absolute top-0 -left-2 hidden w-[268px] border border-dashed border-black bg-gray-200/80 px-2"
   >
-    <span id="cancel" class="text-sm cursor-pointer">❌</span>
+    <span id="cancel" class="cursor-pointer text-sm">❌</span>
     <MenuList class="flex flex-col gap-2" />
   </div>
 </nav>

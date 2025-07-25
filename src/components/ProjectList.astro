@@ -13,7 +13,7 @@ const {
 
 <ul class:list={[className, "flex flex-col gap-3"]} {...reset}>
   <li
-    class="opacity-20 relative top-5 -left-1 text-3xl pointer-events-none font-semibold"
+    class="pointer-events-none relative top-5 -left-1 text-3xl font-semibold opacity-20"
   >
     {title}
   </li>
@@ -29,21 +29,21 @@ const {
               class:list={[
                 "group hover:underline",
                 underline ? "hover:decoration-gray-300" : "hover:opacity-70",
-                "flex justify-between items-center",
+                "flex items-center justify-between",
               ]}
             >
               <div>
                 {v.label}
-                <div class="relative -top-1 ">
+                <div class="relative -top-1">
                   {v.description && (
-                    <span class="text-sm text-gray-300 inline-block group-hover:underline">
+                    <span class="inline-block text-sm text-gray-300 group-hover:underline">
                       {v.description}
                     </span>
                   )}
                 </div>
               </div>
               {!!footerDesc && (
-                <span class="hidden group-hover:inline-block text-gray-300">
+                <span class="hidden text-gray-300 group-hover:inline-block">
                   {footerDesc}
                   {">"}
                 </span>

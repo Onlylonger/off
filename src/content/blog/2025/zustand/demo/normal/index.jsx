@@ -9,7 +9,7 @@ function ClickButton() {
     <div>
       <span>{count}</span>
       <button
-        className="px-2 py-1 border border-black rounded-md cursor-pointer"
+        className="cursor-pointer rounded-md border border-black px-2 py-1"
         onClick={() => increaseCount()}
       >
         Increase Count
@@ -27,7 +27,7 @@ function CountCountry() {
     <div>
       <span>{country}</span>
       <button
-        className="px-2 py-1 border border-black rounded-md cursor-pointer"
+        className="cursor-pointer rounded-md border border-black px-2 py-1"
         onClick={() => updateCountry(`${Math.random()}`)}
       >
         updateCountry

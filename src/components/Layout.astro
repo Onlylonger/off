@@ -21,11 +21,11 @@ const {
       openCanvas && (
         <canvas
           id="canvas"
-          class="fixed left-0 top-0 w-full h-full pointer-events-none -z-1"
+          class="pointer-events-none fixed top-0 left-0 -z-1 h-full w-full"
         />
       )
     }
-    <div class="container px-4 mx-auto min-h-svh flex flex-col pb-10">
+    <div class="container mx-auto flex min-h-svh flex-col px-4 pb-10">
       <Header />
       <main class="flex-1 pb-24">
         <slot />

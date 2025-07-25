@@ -59,7 +59,7 @@ export default function App() {
     <div>
       <div>{count}</div>
       <button
-        className="px-2 py-1 border border-black rounded-md cursor-pointer"
+        className="cursor-pointer rounded-md border border-black px-2 py-1"
         onClick={() =>
           useHookStore.setState((pre) => ({ count: pre.count + 1 }))
         }

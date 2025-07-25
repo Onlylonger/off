@@ -6,10 +6,10 @@ const { class: className, ...reset } = Astro.props;
 ---
 
 <header class:list={[className, "relative shrink-0 pt-6 pb-20"]} {...reset}>
-  <div class="flex justify-between items-center h-14">
+  <div class="flex h-14 items-center justify-between">
     <!-- <MobileMenu class="md:hidden relative" /> -->
 
-    <Menu class="flex items-center h-full gap-5" />
+    <Menu class="flex h-full items-center gap-5" />
   </div>
   <!-- <div class="flex items-center absolute top-11 right-4">
     <span

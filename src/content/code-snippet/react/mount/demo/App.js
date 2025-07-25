@@ -15,19 +15,19 @@ export default function App() {
   const handleTestDialog = () => {
     const instance = mount(
       <div>
-        <div className="fixed top-0 left-0 right-0 bottom-0 bg-black/60"></div>
-        <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-1/2 bg-white h-1/2">
+        <div className="fixed top-0 right-0 bottom-0 left-0 bg-black/60"></div>
+        <div className="fixed top-1/2 left-1/2 h-1/2 w-1/2 -translate-x-1/2 -translate-y-1/2 bg-white">
           dialog content
-          <div className="absolute bottom-0 right-0 flex gap-4">
+          <div className="absolute right-0 bottom-0 flex gap-4">
             <button
               onClick={() => instance.unmount()}
-              className="px-2 py-1 border border-black rounded-md"
+              className="rounded-md border border-black px-2 py-1"
             >
               Cancel
             </button>
             <button
               onClick={() => instance.unmount()}
-              className="px-2 py-1 border border-black rounded-md"
+              className="rounded-md border border-black px-2 py-1"
             >
               OK
             </button>
@@ -39,16 +39,16 @@ export default function App() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-svh gap-2">
+    <div className="flex min-h-svh items-center justify-center gap-2">
       <button
         onClick={handleTestToast}
-        className="px-2 py-1 border border-black rounded-md"
+        className="rounded-md border border-black px-2 py-1"
       >
         Test Toast
       </button>
       <button
         onClick={handleTestDialog}
-        className="px-2 py-1 border border-black rounded-md"
+        className="rounded-md border border-black px-2 py-1"
       >
         Test Dialog
       </button>
