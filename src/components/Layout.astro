@@ -4,7 +4,11 @@ import Footer from "../components/Footer.astro";
 import Header from "../components/Header.astro";
 import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
 
-const { title = SITE_TITLE, description = SITE_DESCRIPTION } = Astro.props;
+const {
+  title = SITE_TITLE,
+  description = SITE_DESCRIPTION,
+  openCanvas = false,
+} = Astro.props;
 ---
 
 <!doctype html>
@@ -12,11 +16,38 @@ const { title = SITE_TITLE, description = SITE_DESCRIPTION } = Astro.props;
   <head>
     <BaseHead title={title} description={description} />
   </head>
-  <body class="min-h-svh flex flex-col pb-10">
-    <Header class="shrink-0 pt-6 pb-20" />
-    <main class="container px-4 mx-auto flex-1 pb-24">
-      <slot />
-    </main>
-    <Footer class="shrink-0" />
+  <body class="">
+    {
+      openCanvas && (
+        <canvas
+          id="canvas"
+          class="fixed left-0 top-0 w-full h-full pointer-events-none -z-1"
+        />
+      )
+    }
+    <div class="container px-4 mx-auto min-h-svh flex flex-col pb-10">
+      <Header />
+      <main class="flex-1 pb-24">
+        <slot />
+      </main>
+      <Footer />
+    </div>
+    <script>
+      import { ParticleSystem } from "../particle";
+      const canvas = document.getElementById("canvas");
+      if (canvas) {
+        const particleSystem = new ParticleSystem(canvas);
+
+        // 动画循环
+        function animate() {
+          particleSystem.update();
+          particleSystem.render();
+          requestAnimationFrame(animate);
+        }
+
+        // 启动动画
+        animate();
+      }
+    </script>
   </body>
 </html>

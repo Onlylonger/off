@@ -5,8 +5,8 @@ import MobileMenu from "./MobileMenu.astro";
 const { class: className, ...reset } = Astro.props;
 ---
 
-<header class:list={[className, "relative"]} {...reset}>
-  <div class="container px-4 flex justify-between items-center mx-auto h-14">
+<header class:list={[className, "relative shrink-0 pt-6 pb-20"]} {...reset}>
+  <div class="flex justify-between items-center h-14">
     <!-- <MobileMenu class="md:hidden relative" /> -->
 
     <Menu class="flex items-center h-full gap-5" />
